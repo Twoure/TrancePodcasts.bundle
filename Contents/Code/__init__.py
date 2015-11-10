@@ -55,6 +55,7 @@ def MainMenu():
             title='Andy Moor\'s Moor Music Podcast', page=0,
             rssfeed='http://www.andymoor.com/moormusic.rss'),
         title='Andy Moor\'s Moor Music Podcast'))
+    oc.add(PrefsObject(title='Preferences'))
 
     return oc
 
