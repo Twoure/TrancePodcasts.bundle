@@ -1,0 +1,9 @@
+[
+  {
+    "id": "page_count",
+    "label": "Items per page",
+    "type": "enum",
+    "values": ["All", "30", "50", "100", "150", "200"],
+    "default": "50"
+  }
+]
