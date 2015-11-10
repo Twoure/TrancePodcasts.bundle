@@ -13,8 +13,7 @@ def Start():
     PopupDirectoryObject.art = R(ART)
     VideoClipObject.thumb = R(ICON)
     VideoClipObject.art = R(ART)
-    #HTTP.CacheTime = CACHE_1HOUR
-    HTTP.CacheTime = 0
+    HTTP.CacheTime = CACHE_1HOUR
 
 ####################################################################################################
 @handler(PREFIX, TITLE)
