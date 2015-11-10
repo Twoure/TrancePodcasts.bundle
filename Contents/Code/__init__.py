@@ -249,7 +249,7 @@ def CreateTrackObject(item_info, include_container=False):
                 container=container,
                 audio_codec=audio_codec,
                 audio_channels=2,
-                optimized_for_streaming=False  #True if Client.Product != 'Plex Web' else False
+                optimized_for_streaming=True if Client.Product != 'Plex Web' else False
                 )
             ]
         )
