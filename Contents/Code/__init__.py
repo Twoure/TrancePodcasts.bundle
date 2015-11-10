@@ -130,8 +130,7 @@ def AudioList(title, rssfeed, page, count=0, header=None, message=None):
         Log('string cut = [%i:%i]' %(count, total_count))
         entry_list = entry_list[total_count - count:total_count]
 
-    # pull out feed title and thumb for global settings
-    feed_title = feed['feed']['title']
+    # pull out thumb for global settings
     main_thumb = feed['feed']['image']['href']
 
     # parse entries for episodes and corresponding metadata
@@ -139,23 +138,23 @@ def AudioList(title, rssfeed, page, count=0, header=None, message=None):
         item_keys = item.keys()
         url = item.enclosures[0]['url']
         title_text = item.title
-        item_title = title_text.replace(feed_title, '').lstrip(': ')
+        item_title = title_text.replace(title, '').lstrip(': ')
 
         # clean episode titles
-        if feed_title == title:
+        if title == 'Perfecto Podcast: featuring Paul Oakenfold':
             if 'Paul Oakenfold:' in item_title:
                 test = Regex('(Episode\ .+)').search(item_title)
                 if test:
                     item_title = test.group(1).strip()
             else:
                 item_title = item_title.replace('Planet Perfecto Podcast', 'Episode').strip()
-        elif feed_title == title:
+        elif title == 'Aly & Fila - Future Sound Of Egypt':
             item_title = 'Episode ' + item_title
-        elif feed_title == title:
+        elif title == 'Andy Moor\'s Moor Music Podcast':
             test = Regex('(Episode\ .+)').search(item_title)
             if test:
                 item_title = test.group(1).strip()
-        elif feed_title == title:
+        elif title == 'Paul van Dyk\'s VONYC Sessions Podcast':
             test = Regex('(\d+)').search(item_title)
             if test:
                 item_title = 'Episode ' + test.group(1).lstrip('0 ').strip()
@@ -171,7 +170,7 @@ def AudioList(title, rssfeed, page, count=0, header=None, message=None):
         genres = []
         if 'author' in item_keys:
             artist = item['author']
-            if feed_title == title:
+            if title == 'Paul van Dyk\'s VONYC Sessions Podcast':
                 test = Regex('(.*)\(').search(artist)
                 if test:
                     artist = test.group(1).strip()
@@ -194,7 +193,7 @@ def AudioList(title, rssfeed, page, count=0, header=None, message=None):
 
         item_info = {
             'title': item_title, 'artist': artist, 'summary': summary, 'thumb': thumb,
-            'oaa_date': originally_available_at, 'duration': duration, 'album': feed_title,
+            'oaa_date': originally_available_at, 'duration': duration, 'album': title,
             'genres': genres, 'url': url
             }
 
@@ -203,6 +202,7 @@ def AudioList(title, rssfeed, page, count=0, header=None, message=None):
         if not 'www.moormusic.info' in url:
             oc.add(CreateTrackObject(item_info=item_info))
 
+    # if no items on page, then go to next page and give a popup message
     if not len(oc) > 0 and next_pg:
         header = title
         message = 'Skipping Page(s), No Valid Episode URL\'s'
